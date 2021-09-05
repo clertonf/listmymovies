@@ -1,21 +1,36 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import AppLoading from "expo-app-loading";
+import { Provider } from "react-redux";
+import store from "./src/store/index";
+import { ThemeProvider } from "styled-components";
 
-import { Welcome } from "./src/components/Welcome";
+import {
+  useFonts,
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+} from "@expo-google-fonts/inter";
+
+import theme from "./src/global/styles/theme";
+
+import { Routes } from "./src/routes";
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
   return (
-    <View style={styles.container}>
-      <Welcome title="TS configurado" />
-    </View>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Routes />
+      </ThemeProvider>
+    </Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
