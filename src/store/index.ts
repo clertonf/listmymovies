@@ -1,6 +1,11 @@
 import { createStore } from "redux";
-import reducers from "./reducers/index";
+import rootReducer from "./modules/rootReducer";
+import { IMovieState } from "./modules/movie/types";
 
-const store = createStore(reducers);
+export interface IState {
+  movie: IMovieState;
+}
+
+const store = createStore(rootReducer);
 
 export default store;

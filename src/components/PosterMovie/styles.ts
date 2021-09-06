@@ -12,10 +12,10 @@ export const Container = styled.View`
 `;
 
 export const ImageMovie = styled.Image`
-  width: 100%;
-  height: 100%;
+  width: 300px;
+  height: 200px;
 
-  border-radius: 18px;
+  border-radius: 30px;
 `;
 
 export const Title = styled.Text`
