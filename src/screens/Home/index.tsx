@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 import api from "../../services/api";
 
 import { useDispatch } from "react-redux";
+import { movieInfo } from "../../store/modules/movie/actions";
 
 import { useNavigation } from "@react-navigation/native";
 import { RectButton, PanGestureHandler } from "react-native-gesture-handler";
@@ -12,7 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { MovieDTO } from "../../dtos/MovieDTO";
 import { CardMovie } from "../../components/CardMovie";
-import { ImageSlider } from "../../components/ImageSlider";
+import { Button } from "../../components/Button";
 
 import Animated, {
   useSharedValue,
@@ -33,7 +34,6 @@ import {
   WrapperCards,
   MovieList,
 } from "./styles";
-import { Button } from "../../components/Button";
 
 export function Home() {
   const dispatch = useDispatch();
@@ -45,9 +45,22 @@ export function Home() {
     navigate("SearchMovie");
   }
 
-  function handleMovieDetails() {
+  // function handleMovieDetails() {
+  //   navigate("MovieDetails");
+  // }
+  const [moviesReleases, setMoviesReleases] = useState<MovieDTO[]>([]);
+
+  // const handleInfoMovie = useCallback(
+  //   (movies: MovieInfo) => {
+  //     dispatch(movieInfo(movies));
+  //     navigate("MovieDetails");
+  //   },
+  //   [dispatch]
+  // );
+
+  function handleMovieInfo(movie: MovieDTO) {
+    dispatch(movieInfo(movie));
     navigate("MovieDetails");
-  
   }
 
   const positionY = useSharedValue(0);
@@ -80,14 +93,8 @@ export function Home() {
   const apiKey = "api_key=d1500cc9c6f961ce14985838ee30eee4";
   const language = "language=pt-BR";
 
-  const [moviesReleases, setMoviesReleases] = useState<MovieDTO[]>();
   const [mostPopularMovie, setMostPopularMovie] = useState<MovieDTO[]>([]);
   const [moviesAction, setMoviesAction] = useState<MovieDTO[]>([]);
-  const [moviesComedy, setMoviesComedy] = useState<MovieDTO[]>([]);
-  const [moviesAnimation, setMoviesAnimation] = useState<MovieDTO[]>([]);
-  const [moviesDrama, setMoviesDrama] = useState<MovieDTO[]>([]);
-  const [moviesHorror, setMoviesHorror] = useState<MovieDTO[]>([]);
-  const [moviesRomance, setMoviesRomance] = useState<MovieDTO[]>([]);
 
   useEffect(() => {
     async function listReleasesMovies() {
@@ -139,7 +146,7 @@ export function Home() {
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => (
               <MovieWrapper>
-                <CardMovie data={item} onPress={handleMovieDetails} />
+                <CardMovie data={item} onPress={() => handleMovieInfo(item)} />
               </MovieWrapper>
             )}
             ListFooterComponent={() => (

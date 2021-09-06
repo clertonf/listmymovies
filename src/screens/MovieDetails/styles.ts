@@ -75,3 +75,5 @@ export const OverView = styled.Text`
   text-align: justify;
   color: ${({ theme }) => theme.colors.text};
 `;
+
+export const Wrapper = styled.View``;
