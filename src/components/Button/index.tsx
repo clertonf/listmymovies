@@ -4,7 +4,7 @@ import { useTheme } from "styled-components";
 
 import { Container, Title } from "./styles";
 
-interface Props {
+interface ButtonProps {
   title: string;
   color?: string;
   onPress: () => void;
@@ -18,7 +18,7 @@ export function Button({
   onPress,
   enabled = true,
   loading = false,
-}: Props) {
+}: ButtonProps) {
   const theme = useTheme();
   return (
     <Container

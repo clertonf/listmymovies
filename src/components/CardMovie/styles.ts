@@ -17,12 +17,12 @@ export const ImageMovie = styled.Image`
   width: 100%;
   height: 100%;
 
-  border-radius: 18px;
+  border-radius: 22px;
 `;
 
 export const CardButton = styled(RectButton)`
   width: 100%;
-  height: 180px;
+  height: 160px;
 
   margin-right: 20px;
 `;
@@ -37,6 +37,7 @@ export const Title = styled.Text`
   font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.primary_600};
   color: ${({ theme }) => theme.colors.shape_dark};
+  text-align: center;
 `;
 
 export const RateMovie = styled.Text`

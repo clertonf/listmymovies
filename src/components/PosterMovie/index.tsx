@@ -3,11 +3,11 @@ import { MovieDTO } from "../../dtos/MovieDTO";
 
 import { Container, ImageMovie, Title } from "./styles";
 
-interface Props {
+interface PosterMovieProps {
   data: MovieDTO;
 }
 
-export function PosterMovie({ data }: Props) {
+export function PosterMovie({ data }: PosterMovieProps) {
   return (
     <Container>
       <ImageMovie

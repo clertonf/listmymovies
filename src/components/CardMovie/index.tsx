@@ -12,11 +12,11 @@ import {
   WrapperLegend,
 } from "./styles";
 
-interface Props extends RectButtonProps {
+interface CardMovieProps extends RectButtonProps {
   data: MovieDTO;
 }
 
-export function CardMovie({ data, ...rest }: Props) {
+export function CardMovie({ data, ...rest }: CardMovieProps) {
   return (
     <Container>
       <CardButton {...rest}>
