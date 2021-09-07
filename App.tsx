@@ -1,4 +1,7 @@
 import React from "react";
+import "intl";
+import "intl/locale-data/jsonp/pt-BR";
+
 import AppLoading from "expo-app-loading";
 import { Provider } from "react-redux";
 import store from "./src/store/index";
