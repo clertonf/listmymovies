@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
+import moment from "moment";
 
 import { PosterMovie } from "../../components/PosterMovie";
 import { BackButton } from "../../components/BackButton";
@@ -30,11 +31,7 @@ export function MovieDetails() {
     return state.movie.items;
   });
 
-  const movie_date = Intl.DateTimeFormat("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-  }).format(new Date(movie.release_date));
+  const dateFormated = moment(movie.release_date).format("DD/MM/YYYY");
 
   function handleToBackHome() {
     navigate("Home");
@@ -56,7 +53,11 @@ export function MovieDetails() {
         <PosterMovie data={movie} />
         <ContentAverage>
           <Average>IMDb: {movie.vote_average} </Average>
-          <ReleaseDate>Lançamento: {movie_date}</ReleaseDate>
+          {dateFormated === "Invalid date" ? (
+            <ReleaseDate>Sem data de lançamento :(</ReleaseDate>
+          ) : (
+            <ReleaseDate>Lançamento: {dateFormated}</ReleaseDate>
+          )}
         </ContentAverage>
 
         <OverViewWrapper>

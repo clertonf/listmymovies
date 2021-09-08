@@ -11,9 +11,13 @@ export function PosterMovie({ data }: PosterMovieProps) {
   return (
     <Container>
       <ImageMovie
-        source={{
-          uri: `https://image.tmdb.org/t/p/w342/${data.backdrop_path}`,
-        }}
+        source={
+          data.poster_path !== null
+            ? {
+                uri: `https://image.tmdb.org/t/p/w342/${data.backdrop_path}`,
+              }
+            : { uri: "https://i.dlpng.com/static/png/6770178_preview.png" }
+        }
         resizeMode="contain"
       />
       <Title>{data.title}</Title>
