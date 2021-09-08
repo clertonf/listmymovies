@@ -1,39 +1,30 @@
 import React, { useEffect, useState } from "react";
-
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 
+import api from "../../services/api";
 import { Alert, Keyboard, StatusBar } from "react-native";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
-import { Button } from "../../components/Button";
-import { CardMovie } from "../../components/CardMovie";
-import { LoadAnimation } from "../../components/LoadAnimation";
-import { MovieDTO } from "../../dtos/MovieDTO";
-import {
-  getMostPopularMovies,
-  getMovieAction,
-  getReleaseMovies,
-} from "../../requests/getMovieDetails";
 import { movieInfo } from "../../store/modules/movie/actions";
-import { MovieDetailsProps } from "../../types/movieDetails.types";
+
+import { BackButton } from "../../components/BackButton";
+import { CardMovieHorizontal } from "../../components/CardMovieHorizontal";
+import { LoadAnimation } from "../../components/LoadAnimation";
+import { SearchBar } from "../../components/SearchBar";
+import { MovieDTO } from "../../dtos/MovieDTO";
+
 import {
-  CategoryTitle,
   Container,
-  Header,
+  ContainerAnimation,
+  ContainerSearch,
   MovieList,
   MovieWrapper,
   Title,
+  WrapperBackButton,
   WrapperCards,
   WrapperCategories,
   WrapperTitle,
-  WrapperBackButton,
-  ContainerSearch,
-  ContainerAnimation,
 } from "./styles";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { BackButton } from "../../components/BackButton";
-import { SearchBar } from "../../components/SearchBar";
-import api from "../../services/api";
 
 export function SearchMovie() {
   const dispatch = useDispatch();
@@ -73,11 +64,10 @@ export function SearchMovie() {
       `https://api.themoviedb.org/3/search/movie?${apiKey}&${language}&page=1&include_adult=false&query=${searchTerm}`
     );
 
-    console.log(response.data);
     if (response.data.total_results === 0) {
       Alert.alert("Ops!", "Nenhum filme encontrado :(");
     }
-
+    console.log(response.data.results);
     setMoviesReleases(response.data.results);
   }
 
@@ -86,7 +76,6 @@ export function SearchMovie() {
       try {
         const response = await api.get(`/discover/movie?${apiKey}&${language}`);
         setMoviesReleases(response.data.results);
-        console.log(response.data.results);
       } catch (error) {
         console.log(error);
       } finally {
@@ -135,10 +124,10 @@ export function SearchMovie() {
                   data={movie.category}
                   keyExtractor={(item) => String(item.id)}
                   showsVerticalScrollIndicator={false}
-                  numColumns={2}
+                  numColumns={1}
                   renderItem={({ item }) => (
                     <MovieWrapper>
-                      <CardMovie
+                      <CardMovieHorizontal
                         data={item}
                         onPress={() => handleMovieInfo(item)}
                       />
