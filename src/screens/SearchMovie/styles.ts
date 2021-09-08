@@ -9,12 +9,15 @@ export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.shape_dark};
 `;
 
-export const Header = styled.View`
-  width: 100%;
-  height: ${RFValue(120)}px;
+export const Header = styled.View``;
 
-  justify-content: center;
+export const WrapperTitle = styled.View`
+  margin-top: ${getStatusBarHeight() + 14}px;
   align-items: center;
+`;
+
+export const WrapperBackButton = styled.View`
+  padding: 0 20px;
 `;
 
 export const Title = styled.Text`
@@ -30,6 +33,8 @@ export const ContentSearch = styled.View`
 
   justify-content: center;
   align-items: center;
+
+  margin-top: 20px;
 `;
 
 export const WrapperMovies = styled.View`
