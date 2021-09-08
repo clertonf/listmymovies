@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 
-import { RFValue } from "react-native-responsive-fontsize";
+import { RFValue, RFPercentage } from "react-native-responsive-fontsize";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
 export const Container = styled.View`
@@ -19,7 +19,7 @@ export const Header = styled.View`
 `;
 
 export const WrapperTitle = styled.View`
-  margin-top: ${getStatusBarHeight() + 5}px;
+  margin-top: ${getStatusBarHeight()}px;
   align-items: center;
 `;
 
@@ -31,13 +31,11 @@ export const Title = styled.Text`
   font-size: ${RFValue(22)}px;
   font-family: ${({ theme }) => theme.fonts.primary_600};
   color: ${({ theme }) => theme.colors.success};
-
-  margin-top: 20px;
 `;
 
 export const Footer = styled.ScrollView.attrs({
   contentContainerStyle: {
-    paddingTop: getStatusBarHeight() + 20,
+    paddingTop: getStatusBarHeight() + 30,
     paddingBottom: 24,
   },
   showsVerticalScrollIndicator: false,
@@ -46,7 +44,7 @@ export const Footer = styled.ScrollView.attrs({
 export const ContentAverage = styled.View`
   width: 100%;
   padding: 20px 20px;
-  margin-top: 35px;
+  margin-top: ${RFPercentage(10)}px;
 
   justify-content: space-between;
   align-items: center;

@@ -6,7 +6,7 @@ export const Container = styled.View`
   width: 135px;
   height: 260px;
 
-  margin-right: 8px;
+  margin: 5px;
 
   justify-content: flex-start;
 
@@ -23,25 +23,19 @@ export const ImageMovie = styled.Image`
 export const CardButton = styled(RectButton)`
   width: 100%;
   height: 160px;
-
-  margin-right: 20px;
 `;
 
 export const WrapperLegend = styled.View`
   margin-left: 8px;
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text.attrs({
+  numberOfLines: 4,
+})`
   margin-top: 10px;
 
   font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.primary_600};
-  color: ${({ theme }) => theme.colors.shape_dark};
-  text-align: center;
-`;
-
-export const RateMovie = styled.Text`
-  font-size: ${RFValue(13)}px;
-  font-family: ${({ theme }) => theme.fonts.primary_500};
   color: ${({ theme }) => theme.colors.text};
+  text-align: center;
 `;

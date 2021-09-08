@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Animated, Dimensions, TextInputProps } from "react-native";
 import { useTheme } from "styled-components";
 
@@ -14,34 +14,19 @@ export function SearchBar({
   placeholder,
   onPress,
   value,
-
   ...rest
 }: InputSearchProps) {
   const theme = useTheme();
-  const animation = new Animated.Value(60);
-  const { width } = Dimensions.get("window");
-
-  function onSearch() {
-    Animated.spring(animation, {
-      toValue: width * 0.7,
-      useNativeDriver: false,
-    }).start();
-  }
 
   return (
-    <Container style={{ width: animation }}>
+    <Container>
       <Input
         placeholder={placeholder}
         value={value}
-        returnKeyType="search"
         placeholderTextColor={theme.colors.text_detail}
         {...rest}
       />
-      <BoxButtonSearch
-        onPress={() => {
-          onSearch(), onPress();
-        }}
-      >
+      <BoxButtonSearch onPress={onPress}>
         <SearchIcon />
       </BoxButtonSearch>
     </Container>

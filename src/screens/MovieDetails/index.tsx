@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 import { PosterMovie } from "../../components/PosterMovie";
-import { MovieDTO } from "../../dtos/MovieDTO";
 import { BackButton } from "../../components/BackButton";
 
 import { IState } from "../../store";
@@ -22,7 +21,6 @@ import {
   OverViewWrapper,
   TitleOverView,
   OverView,
-  Wrapper,
 } from "./styles";
 
 export function MovieDetails() {

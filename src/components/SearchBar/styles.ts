@@ -1,10 +1,12 @@
 import styled from "styled-components/native";
+import { Dimensions, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Animated, Dimensions, TextInput } from "react-native";
 import { RectButton } from "react-native-gesture-handler";
 
-export const Container = styled(Animated.View)`
-  width: 60px;
+const { width } = Dimensions.get("window");
+
+export const Container = styled.View`
+  width: ${width * 0.7}px;
   height: 60px;
 
   background-color: ${({ theme }) => theme.colors.title};

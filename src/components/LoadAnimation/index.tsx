@@ -12,7 +12,7 @@ export function LoadAnimation() {
         source={loadMovie}
         autoPlay
         resizeMode="contain"
-        style={{ marginTop: 20, height: 300 }}
+        style={{ height: 200 }}
         loop
       />
     </Container>

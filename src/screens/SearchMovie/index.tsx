@@ -1,38 +1,68 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
-import api from "../../services/api";
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+
+import { Alert, Keyboard, StatusBar } from "react-native";
+import { useDispatch } from "react-redux";
+import { Button } from "../../components/Button";
+import { CardMovie } from "../../components/CardMovie";
+import { LoadAnimation } from "../../components/LoadAnimation";
 import { MovieDTO } from "../../dtos/MovieDTO";
-
 import {
-  TouchableWithoutFeedback,
-  Keyboard,
-  FlatList,
-  Alert,
-} from "react-native";
-
-import { SearchBar } from "../../components/SearchBar";
-
+  getMostPopularMovies,
+  getMovieAction,
+  getReleaseMovies,
+} from "../../requests/getMovieDetails";
+import { movieInfo } from "../../store/modules/movie/actions";
+import { MovieDetailsProps } from "../../types/movieDetails.types";
 import {
+  CategoryTitle,
   Container,
   Header,
+  MovieList,
+  MovieWrapper,
   Title,
-  ContentSearch,
+  WrapperCards,
+  WrapperCategories,
   WrapperTitle,
   WrapperBackButton,
+  ContainerSearch,
+  ContainerAnimation,
 } from "./styles";
-import { CardMovie } from "../../components/CardMovie";
-
-import { IMovie, IMovieState } from "../../store/modules/movie/types";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { BackButton } from "../../components/BackButton";
-import { useNavigation } from "@react-navigation/native";
+import { SearchBar } from "../../components/SearchBar";
+import api from "../../services/api";
 
 export function SearchMovie() {
-  const { navigate } = useNavigation();
+  const dispatch = useDispatch();
+
   const apiKey = "api_key=d1500cc9c6f961ce14985838ee30eee4";
   const language = "language=pt-BR";
 
-  const [variedMovies, setVariedMovies] = useState<MovieDTO[]>([]);
+  const { navigate } = useNavigation();
+
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const [moviesReleases, setMoviesReleases] = useState<MovieDTO[]>([]);
+
+  const movies = [
+    {
+      id: 1,
+      category: moviesReleases,
+      nameCategory: "Lançamentos 🔥",
+    },
+  ];
+
+  function handleMovieInfo(movie: MovieDTO) {
+    dispatch(movieInfo(movie));
+    navigate("MovieDetails");
+  }
+
+  function handleToBackHome() {
+    navigate("Home");
+  }
 
   async function getMovie() {
     if (!searchTerm) {
@@ -47,26 +77,33 @@ export function SearchMovie() {
     if (response.data.total_results === 0) {
       Alert.alert("Ops!", "Nenhum filme encontrado :(");
     }
+
+    setMoviesReleases(response.data.results);
   }
 
   useEffect(() => {
-    async function listMoviesAction() {
-      const response = await api.get(
-        `discover/movie?${apiKey}&${language}&page=${1}`
-      );
-
-      setVariedMovies(response.data.results);
+    async function listMovies() {
+      try {
+        const response = await api.get(`/discover/movie?${apiKey}&${language}`);
+        setMoviesReleases(response.data.results);
+        console.log(response.data.results);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     }
-    listMoviesAction();
+    listMovies();
   }, []);
 
-  function handleToBackHome() {
-    navigate("Home");
-  }
-
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <Container>
+    <Container>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="transparent"
+          translucent
+        />
         <WrapperTitle>
           <Title>Procurar filme</Title>
         </WrapperTitle>
@@ -74,7 +111,8 @@ export function SearchMovie() {
         <WrapperBackButton>
           <BackButton onPress={handleToBackHome} />
         </WrapperBackButton>
-        <ContentSearch>
+
+        <ContainerSearch>
           <SearchBar
             placeholder="Busque seus filmes"
             value={searchTerm}
@@ -83,8 +121,35 @@ export function SearchMovie() {
             }}
             onPress={getMovie}
           />
-        </ContentSearch>
-      </Container>
-    </TouchableWithoutFeedback>
+        </ContainerSearch>
+
+        <WrapperCategories>
+          {movies.map((movie) => (
+            <WrapperCards key={movie.id}>
+              {loading ? (
+                <ContainerAnimation>
+                  <LoadAnimation />
+                </ContainerAnimation>
+              ) : (
+                <MovieList
+                  data={movie.category}
+                  keyExtractor={(item) => String(item.id)}
+                  showsVerticalScrollIndicator={false}
+                  numColumns={2}
+                  renderItem={({ item }) => (
+                    <MovieWrapper>
+                      <CardMovie
+                        data={item}
+                        onPress={() => handleMovieInfo(item)}
+                      />
+                    </MovieWrapper>
+                  )}
+                />
+              )}
+            </WrapperCards>
+          ))}
+        </WrapperCategories>
+      </TouchableWithoutFeedback>
+    </Container>
   );
 }

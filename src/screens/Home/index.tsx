@@ -52,14 +52,12 @@ export function Home() {
   function handleSearchMovies() {
     navigate("SearchMovie");
   }
-
+  const [loading, setLoading] = useState(true);
   const [movieDetails, setMovieDetails] = useState<MovieDetailsProps>({
     moviesReleases: [],
     mostPopularMovie: [],
     moviesAction: [],
   });
-
-  const [loading, setLoading] = useState(true);
 
   const test_movies = [
     {
@@ -156,13 +154,16 @@ export function Home() {
         <Title>My List Movies </Title>
       </Header>
 
-      <WrapperCategories>
-        {test_movies.map((movie) => (
-          <WrapperCards key={movie.id}>
-            <CategoryTitle>{movie.nameCategory}</CategoryTitle>
-            {loading ? (
-              <LoadAnimation />
-            ) : (
+      {loading ? (
+        <>
+          <LoadAnimation />
+        </>
+      ) : (
+        <WrapperCategories>
+          {test_movies.map((movie) => (
+            <WrapperCards key={movie.id}>
+              <CategoryTitle>{movie.nameCategory}</CategoryTitle>
+
               <MovieList
                 data={movie.category}
                 keyExtractor={(item) => String(item.id)}
@@ -178,10 +179,10 @@ export function Home() {
                   <Button title="Ver mais" onPress={() => {}} />
                 )}
               />
-            )}
-          </WrapperCards>
-        ))}
-      </WrapperCategories>
+            </WrapperCards>
+          ))}
+        </WrapperCategories>
+      )}
 
       <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View

@@ -9,6 +9,8 @@ export const Container = styled.View`
   align-items: center;
 
   border-radius: 8px;
+
+  padding: 10px;
 `;
 
 export const ImageMovie = styled.Image`
