@@ -1,6 +1,12 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 
-import api from "../../services/api";
+import axios from "axios";
+
+import {
+  getReleaseMovies,
+  getMovieAction,
+  getMostPopularMovies,
+} from "../../requests/getMovieDetails";
 
 import { useDispatch } from "react-redux";
 import { movieInfo } from "../../store/modules/movie/actions";
@@ -8,12 +14,14 @@ import { movieInfo } from "../../store/modules/movie/actions";
 import { useNavigation } from "@react-navigation/native";
 import { RectButton, PanGestureHandler } from "react-native-gesture-handler";
 import { useTheme } from "styled-components";
-import { StatusBar, StyleSheet, FlatList } from "react-native";
+import { StatusBar, StyleSheet, BackHandler } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { MovieDTO } from "../../dtos/MovieDTO";
+import { MovieDetailsProps } from "../../types/movieDetails.types";
 import { CardMovie } from "../../components/CardMovie";
 import { Button } from "../../components/Button";
+import { LoadAnimation } from "../../components/LoadAnimation";
 
 import Animated, {
   useSharedValue,
@@ -45,18 +53,31 @@ export function Home() {
     navigate("SearchMovie");
   }
 
-  // function handleMovieDetails() {
-  //   navigate("MovieDetails");
-  // }
-  const [moviesReleases, setMoviesReleases] = useState<MovieDTO[]>([]);
+  const [movieDetails, setMovieDetails] = useState<MovieDetailsProps>({
+    moviesReleases: [],
+    mostPopularMovie: [],
+    moviesAction: [],
+  });
 
-  // const handleInfoMovie = useCallback(
-  //   (movies: MovieInfo) => {
-  //     dispatch(movieInfo(movies));
-  //     navigate("MovieDetails");
-  //   },
-  //   [dispatch]
-  // );
+  const [loading, setLoading] = useState(true);
+
+  const test_movies = [
+    {
+      id: 1,
+      category: movieDetails.moviesReleases,
+      nameCategory: "Lançamentos 🔥",
+    },
+    {
+      id: 2,
+      category: movieDetails.mostPopularMovie,
+      nameCategory: "Mais populares 🔥",
+    },
+    {
+      id: 3,
+      category: movieDetails.moviesAction,
+      nameCategory: "Ação/Aventura",
+    },
+  ];
 
   function handleMovieInfo(movie: MovieDTO) {
     dispatch(movieInfo(movie));
@@ -90,41 +111,38 @@ export function Home() {
     },
   });
 
-  const apiKey = "api_key=d1500cc9c6f961ce14985838ee30eee4";
-  const language = "language=pt-BR";
-
-  const [mostPopularMovie, setMostPopularMovie] = useState<MovieDTO[]>([]);
-  const [moviesAction, setMoviesAction] = useState<MovieDTO[]>([]);
-
   useEffect(() => {
-    async function listReleasesMovies() {
-      const response = await api.get(`/discover/movie?${apiKey}&${language}`);
-
-      setMoviesReleases(response.data.results);
+    async function listMovies() {
+      try {
+        axios
+          .all([getReleaseMovies(), getMovieAction(), getMostPopularMovies()])
+          .then(
+            axios.spread(function (
+              releaseMovies,
+              movieAction,
+              mostPopularMovies
+            ) {
+              setMovieDetails({
+                moviesReleases: releaseMovies.data.results,
+                mostPopularMovie: movieAction.data.results,
+                moviesAction: mostPopularMovies.data.results,
+              });
+            })
+          );
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
     }
-    listReleasesMovies();
+    listMovies();
   }, []);
 
+  //Prevenir volta ao splash (Android)
   useEffect(() => {
-    async function listPopularMovies() {
-      const response = await api.get(
-        `movie/top_rated?${apiKey}&${language}&page=2`
-      );
-
-      setMostPopularMovie(response.data.results);
-    }
-    listPopularMovies();
-  }, []);
-
-  useEffect(() => {
-    async function listMoviesAction() {
-      const response = await api.get(
-        `movie/top_rated?${apiKey}&${language}&with_genres=28&page=1`
-      );
-
-      setMoviesAction(response.data.results);
-    }
-    listMoviesAction();
+    BackHandler.addEventListener("hardwareBackPress", () => {
+      return true;
+    });
   }, []);
 
   return (
@@ -139,53 +157,30 @@ export function Home() {
       </Header>
 
       <WrapperCategories>
-        <WrapperCards>
-          <CategoryTitle>Lançamentos 🔥 </CategoryTitle>
-          <MovieList
-            data={moviesReleases}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({ item }) => (
-              <MovieWrapper>
-                <CardMovie data={item} onPress={() => handleMovieInfo(item)} />
-              </MovieWrapper>
+        {test_movies.map((movie) => (
+          <WrapperCards key={movie.id}>
+            <CategoryTitle>{movie.nameCategory}</CategoryTitle>
+            {loading ? (
+              <LoadAnimation />
+            ) : (
+              <MovieList
+                data={movie.category}
+                keyExtractor={(item) => String(item.id)}
+                renderItem={({ item }) => (
+                  <MovieWrapper>
+                    <CardMovie
+                      data={item}
+                      onPress={() => handleMovieInfo(item)}
+                    />
+                  </MovieWrapper>
+                )}
+                ListFooterComponent={() => (
+                  <Button title="Ver mais" onPress={() => {}} />
+                )}
+              />
             )}
-            ListFooterComponent={() => (
-              <Button title="Ver mais" onPress={() => {}} />
-            )}
-          />
-        </WrapperCards>
-
-        <WrapperCards>
-          <CategoryTitle>Mais populares 🔥 </CategoryTitle>
-          <MovieList
-            data={mostPopularMovie}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({ item }) => (
-              <MovieWrapper>
-                <CardMovie data={item} onPress={() => {}} />
-              </MovieWrapper>
-            )}
-            ListFooterComponent={() => (
-              <Button title="Ver mais" onPress={() => {}} />
-            )}
-          />
-        </WrapperCards>
-
-        <WrapperCards>
-          <CategoryTitle>Ação/Aventura</CategoryTitle>
-          <MovieList
-            data={moviesAction}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({ item }) => (
-              <MovieWrapper>
-                <CardMovie data={item} onPress={() => {}} />
-              </MovieWrapper>
-            )}
-            ListFooterComponent={() => (
-              <Button title="Ver mais" onPress={() => {}} />
-            )}
-          />
-        </WrapperCards>
+          </WrapperCards>
+        ))}
       </WrapperCategories>
 
       <PanGestureHandler onGestureEvent={onGestureEvent}>

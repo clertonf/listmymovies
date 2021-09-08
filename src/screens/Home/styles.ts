@@ -36,12 +36,8 @@ export const WrapperCategories = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })``;
 
-export const MovieImages = styled.View`
-  margin-top: ${getStatusBarHeight() + 32}px;
-`;
-
 export const CategoryTitle = styled.Text`
-  font-size: ${RFValue(22)}px;
+  font-size: ${RFValue(20)}px;
   font-family: ${({ theme }) => theme.fonts.primary_600};
   color: ${({ theme }) => theme.colors.shape_dark};
 
