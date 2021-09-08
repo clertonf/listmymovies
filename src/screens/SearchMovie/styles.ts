@@ -69,10 +69,11 @@ export const WrapperCards = styled.View``;
 export const MovieList = styled(FlatList as new () => FlatList<MovieDTO>).attrs(
   {
     contentContainerStyle: {
-      alignItems: "center",
-
       marginTop: RFPercentage(5),
-      paddingBottom: RFPercentage(60),
+      paddingBottom: RFPercentage(70),
     },
   }
-)``;
+)`
+  width: 100%;
+  padding: 20px;
+`;
