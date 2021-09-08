@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 import { PosterMovie } from "../../components/PosterMovie";
 import { MovieDTO } from "../../dtos/MovieDTO";
+import { BackButton } from "../../components/BackButton";
 
 import { IState } from "../../store";
 import { IMovie } from "../../store/modules/movie/types";
@@ -10,6 +12,8 @@ import { IMovie } from "../../store/modules/movie/types";
 import {
   Container,
   Header,
+  WrapperTitle,
+  WrapperBackButton,
   Title,
   Footer,
   ContentAverage,
@@ -22,23 +26,39 @@ import {
 } from "./styles";
 
 export function MovieDetails() {
-  const movie: IMovie = useSelector<IMovie, IMovie>((state) => {
-    return state;
+  const { navigate } = useNavigation();
+
+  const movie: IMovie = useSelector<IState, IMovie>((state) => {
+    return state.movie.items;
   });
 
-  console.log(movie);
+  const movie_date = Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "2-digit",
+  }).format(new Date(movie.release_date));
+
+  function handleToBackHome() {
+    navigate("Home");
+  }
 
   return (
     <Container>
       <Header>
-        <Title>Detalhes do filme</Title>
+        <WrapperTitle>
+          <Title>Detalhes do filme</Title>
+        </WrapperTitle>
+
+        <WrapperBackButton>
+          <BackButton onPress={handleToBackHome} />
+        </WrapperBackButton>
       </Header>
 
       <Footer>
-        <PosterMovie data={movie.movie.items} as MovieDTO />
+        <PosterMovie data={movie} />
         <ContentAverage>
-          <Average>IMDb: </Average>
-          <ReleaseDate>Lançamento: </ReleaseDate>
+          <Average>IMDb: {movie.vote_average} </Average>
+          <ReleaseDate>Lançamento: {movie_date}</ReleaseDate>
         </ContentAverage>
 
         <OverViewWrapper>
@@ -46,7 +66,7 @@ export function MovieDetails() {
           {movie.overview === "" ? (
             <OverView>Filme sem descrição :(</OverView>
           ) : (
-            <OverView>{movie.movie.items.overview}</OverView>
+            <OverView>{movie.overview}</OverView>
           )}
         </OverViewWrapper>
       </Footer>

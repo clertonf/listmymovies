@@ -14,9 +14,17 @@ export const Header = styled.View`
   height: ${RFValue(120)}px;
 
   justify-content: center;
-  align-items: center;
 
   background-color: ${({ theme }) => theme.colors.shape_dark};
+`;
+
+export const WrapperTitle = styled.View`
+  margin-top: ${getStatusBarHeight() + 5}px;
+  align-items: center;
+`;
+
+export const WrapperBackButton = styled.View`
+  padding: 0 20px;
 `;
 
 export const Title = styled.Text`
