@@ -3,9 +3,11 @@
     "name": "listmymovies",
     "slug": "listmymovies",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "splash": {
+      "image": "./assets/splash.png",
+      "backgroundColor": "#FFFFFF"
+    }
   },
   "name": "listmymovies"
 }
