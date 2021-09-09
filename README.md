@@ -19,7 +19,7 @@ O projeto foi feito com as seguintes tecnologias:
 - [Typescript](https://www.typescriptlang.org)
 - [Styled-Components](https://styled-components.com/)
 - [Jest](https://jestjs.io/pt-BR/)
-- [Jest](https://jestjs.io/pt-BR/)
+
 
 ## :zap: Executando o Projeto
 
