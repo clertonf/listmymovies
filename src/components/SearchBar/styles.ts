@@ -1,9 +1,13 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import { Dimensions, TextInput } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { RectButton } from "react-native-gesture-handler";
 
 const { width } = Dimensions.get("window");
+
+interface Props {
+  active: boolean;
+}
 
 export const Container = styled.View`
   width: ${width * 0.7}px;
@@ -13,13 +17,20 @@ export const Container = styled.View`
   border-radius: 30px;
 `;
 
-export const Input = styled(TextInput)`
+export const Input = styled(TextInput)<Props>`
   flex: 1;
 
   margin-right: 60px;
   margin-left: 20px;
 
   color: ${({ theme }) => theme.colors.shape};
+
+  ${({ active, theme }) =>
+    active &&
+    css`
+      border-width: 3px;
+      border-color: ${theme.colors.success};
+    `};
 `;
 
 export const BoxButtonSearch = styled(RectButton)`

@@ -5,25 +5,26 @@ import { useTheme } from "styled-components";
 import { Container, BoxButtonSearch, SearchIcon, Input } from "./styles";
 
 interface InputSearchProps extends TextInputProps {
-  placeholder: string;
-  onPress: () => void;
-  value: string;
+  placeholder?: string;
+  onPress?: () => void;
+  value?: string;
+  active?: boolean;
 }
 
 export function SearchBar({
   placeholder,
   onPress,
   value,
+  active = false,
   ...rest
 }: InputSearchProps) {
-  const theme = useTheme();
-
   return (
     <Container>
       <Input
         placeholder={placeholder}
         value={value}
-        placeholderTextColor={theme.colors.text_detail}
+        active={active}
+        placeholderTextColor="#AEAEB3"
         {...rest}
       />
       <BoxButtonSearch onPress={onPress}>
