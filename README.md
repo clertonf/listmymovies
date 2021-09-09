@@ -2,15 +2,18 @@
 
   <p align="center" >
     <a href="#zap-executando-o-projeto"> :zap: Executando o Projeto </a> |
-    <a href="#thinking-como-contribuir"> :thinking: Como Contribuir?</a> |
     <a href="#memo-licença"> :memo: Licença </a> 
   </p>
 </div>
 
 ## :barber: Projeto
 
-Aplicativo que lista/busca filmes por categoria e nome, utilizando a API do [The Movie DB](https://www.themoviedb.org/?language=pt-BR) 
-Desafio elaborado pela DellLead.
+Aplicativo que lista/busca filmes por categoria e nome, utilizando a API do [The Movie DB](https://www.themoviedb.org/?language=pt-BR), onde o usuário visualiza a sinopse do filme, sua nota no IMDb e a data de lançamento. 
+ 
+<p align="center" style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 30px;">
+  Desafio elaborado pela <strong> Lead Dell.</strong>
+</p>
+
 
 
 ### Tecnologias Usadas
@@ -50,7 +53,10 @@ npm install
 expo start
 ```
 
-Para mais informações da API acesse o arquivo `api/README.md`.
+4. Depois que ele iniciar, automaticamente irá abrir uma aba localhost contendo um QRCode para scanear.
+5. Execute pelo emulador de sua máquina ou baixe o app Expo Go, disponível na Playstore ou Applestore.
+
+
 
 ### :memo: Licença
 
