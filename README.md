@@ -9,7 +9,9 @@
 
 ## :barber: Projeto
 
-Aplicativo que lista/busca filmes por categoria e nome, utilizando a API do [The Movie DB](https://www.themoviedb.org/?language=pt-BR)
+Aplicativo que lista/busca filmes por categoria e nome, utilizando a API do [The Movie DB](https://www.themoviedb.org/?language=pt-BR) 
+Desafio elaborado pela DellLead.
+
 
 ### Tecnologias Usadas
 
