@@ -43,7 +43,7 @@ export const Footer = styled.ScrollView.attrs({
 
 export const ContentAverage = styled.View`
   width: 100%;
-  padding: 20px 20px;
+  padding: 20px 30px;
   margin-top: ${RFPercentage(10)}px;
 
   justify-content: space-between;
@@ -52,13 +52,13 @@ export const ContentAverage = styled.View`
 `;
 
 export const Average = styled.Text`
-  font-size: ${RFValue(18)}px;
+  font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.primary_600};
   color: ${({ theme }) => theme.colors.text_gold};
 `;
 
 export const ReleaseDate = styled.Text`
-  font-size: ${RFValue(15)}px;
+  font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.primary_600};
   color: ${({ theme }) => theme.colors.shape};
 `;
@@ -83,3 +83,7 @@ export const OverView = styled.Text`
 `;
 
 export const Wrapper = styled.View``;
+
+export const WrapperReleaseDate = styled.View`
+  align-items: center;
+`;

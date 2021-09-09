@@ -33,7 +33,6 @@ export const WrapperCategories = styled.ScrollView.attrs({
     paddingTop: getStatusBarHeight(),
     paddingBottom: 24,
   },
-  showsVerticalScrollIndicator: false,
 })``;
 
 export const CategoryTitle = styled.Text`
@@ -42,14 +41,6 @@ export const CategoryTitle = styled.Text`
   color: ${({ theme }) => theme.colors.shape_dark};
 
   padding: 15px 20px;
-`;
-
-export const ContainerCardMovies = styled.ScrollView.attrs({
-  horizontal: true,
-  showsHorizontalScrollIndicator: false,
-  contentContainerStyle: { paddingHorizontal: 24 },
-})`
-  width: 100%;
 `;
 
 export const MovieWrapper = styled.View`

@@ -22,10 +22,11 @@ import {
   OverViewWrapper,
   TitleOverView,
   OverView,
+  WrapperReleaseDate,
 } from "./styles";
 
 export function MovieDetails() {
-  const { navigate } = useNavigation();
+  const { goBack } = useNavigation();
 
   const movie: IMovie = useSelector<IState, IMovie>((state) => {
     return state.movie.items;
@@ -33,8 +34,8 @@ export function MovieDetails() {
 
   const dateFormated = moment(movie.release_date).format("DD/MM/YYYY");
 
-  function handleToBackHome() {
-    navigate("Home");
+  function handleGoBack() {
+    goBack();
   }
 
   return (
@@ -45,7 +46,7 @@ export function MovieDetails() {
         </WrapperTitle>
 
         <WrapperBackButton>
-          <BackButton onPress={handleToBackHome} />
+          <BackButton onPress={handleGoBack} />
         </WrapperBackButton>
       </Header>
 
@@ -54,9 +55,14 @@ export function MovieDetails() {
         <ContentAverage>
           <Average>IMDb: {movie.vote_average} </Average>
           {dateFormated === "Invalid date" ? (
-            <ReleaseDate>Sem data de lançamento :(</ReleaseDate>
+            <WrapperReleaseDate>
+              <ReleaseDate>Sem data de lançamento :(</ReleaseDate>
+            </WrapperReleaseDate>
           ) : (
-            <ReleaseDate>Lançamento: {dateFormated}</ReleaseDate>
+            <WrapperReleaseDate>
+              <ReleaseDate>Lançamento </ReleaseDate>
+              <ReleaseDate>{dateFormated}</ReleaseDate>
+            </WrapperReleaseDate>
           )}
         </ContentAverage>
 
