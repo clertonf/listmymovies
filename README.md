@@ -19,6 +19,7 @@ O projeto foi feito com as seguintes tecnologias:
 - [Typescript](https://www.typescriptlang.org)
 - [Styled-Components](https://styled-components.com/)
 - [Jest](https://jestjs.io/pt-BR/)
+- [Redux](https://redux.js.org/)
 
 
 ## :zap: Executando o Projeto
