@@ -32,7 +32,7 @@ git clone https://github.com/clertonf/listmymovies
 2. Entre na raiz do projeto e dê o comando `build.sh`, defina as credencias do banco de dados substituindo os valores `uol`. Por exemplo:
 
 ```bash
-yarn install || yarn
+yarn install 
 ```
 
 Ou
