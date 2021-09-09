@@ -42,6 +42,12 @@ Ou
 npm install
 ```
 
+3. Quando a instalação das dependências estiverem finalizadas, dê o seguinte comando para iniciar no Expo:
+
+```bash
+expo start
+```
+
 Para mais informações da API acesse o arquivo `api/README.md`.
 
 ### :memo: Licença
