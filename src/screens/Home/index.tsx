@@ -6,6 +6,11 @@ import {
   getReleaseMovies,
   getMovieAction,
   getMostPopularMovies,
+  getMovieAnimation,
+  getMovieComedian,
+  getMovieRomance,
+  getMovieMistery,
+  getMovieHorror,
 } from "../../requests/getMovieDetails";
 
 import { useDispatch } from "react-redux";
@@ -14,13 +19,12 @@ import { movieInfo } from "../../store/modules/movie/actions";
 import { useNavigation } from "@react-navigation/native";
 import { RectButton, PanGestureHandler } from "react-native-gesture-handler";
 import { useTheme } from "styled-components";
-import { StatusBar, StyleSheet, BackHandler } from "react-native";
+import { StatusBar, StyleSheet, BackHandler, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { MovieDTO } from "../../dtos/MovieDTO";
 import { MovieDetailsProps } from "../../types/movieDetails.types";
 import { CardMovie } from "../../components/CardMovie";
-import { Button } from "../../components/Button";
 import { LoadAnimation } from "../../components/LoadAnimation";
 
 import Animated, {
@@ -57,9 +61,14 @@ export function Home() {
     moviesReleases: [],
     mostPopularMovie: [],
     moviesAction: [],
+    moviesComedian: [],
+    moviesAnimation: [],
+    moviesRomance: [],
+    moviesMystery: [],
+    moviesHorror: [],
   });
 
-  const test_movies = [
+  const movies = [
     {
       id: 1,
       category: movieDetails.moviesReleases,
@@ -68,12 +77,37 @@ export function Home() {
     {
       id: 2,
       category: movieDetails.mostPopularMovie,
-      nameCategory: "Mais populares 🔥",
+      nameCategory: "Mais populares 🌍",
     },
     {
       id: 3,
       category: movieDetails.moviesAction,
-      nameCategory: "Ação/Aventura",
+      nameCategory: "Ação/Aventura 🔫",
+    },
+    {
+      id: 4,
+      category: movieDetails.moviesAnimation,
+      nameCategory: "Animação/Fantasia 🗡️",
+    },
+    {
+      id: 5,
+      category: movieDetails.moviesComedian,
+      nameCategory: "Comédia 😂",
+    },
+    {
+      id: 6,
+      category: movieDetails.moviesRomance,
+      nameCategory: "Romance ❤️",
+    },
+    {
+      id: 7,
+      category: movieDetails.moviesMystery,
+      nameCategory: "Suspense 🔎",
+    },
+    {
+      id: 8,
+      category: movieDetails.moviesHorror,
+      nameCategory: "Terror 👻",
     },
   ];
 
@@ -113,22 +147,41 @@ export function Home() {
     async function listMovies() {
       try {
         axios
-          .all([getReleaseMovies(), getMovieAction(), getMostPopularMovies()])
+          .all([
+            getReleaseMovies(),
+            getMovieAction(),
+            getMostPopularMovies(),
+            getMovieAnimation(),
+            getMovieComedian(),
+            getMovieRomance(),
+            getMovieMistery(),
+            getMovieHorror(),
+          ])
           .then(
             axios.spread(function (
               releaseMovies,
               movieAction,
-              mostPopularMovies
+              mostPopularMovies,
+              animation,
+              comedian,
+              romance,
+              mistery,
+              horror
             ) {
               setMovieDetails({
                 moviesReleases: releaseMovies.data.results,
-                mostPopularMovie: movieAction.data.results,
-                moviesAction: mostPopularMovies.data.results,
+                mostPopularMovie: mostPopularMovies.data.results,
+                moviesAction: movieAction.data.results,
+                moviesAnimation: animation.data.results,
+                moviesComedian: comedian.data.results,
+                moviesRomance: romance.data.results,
+                moviesMystery: mistery.data.results,
+                moviesHorror: horror.data.results,
               });
             })
           );
       } catch (error) {
-        console.log(error);
+        Alert.alert("Ops!", " Erro interno, tente novamente mais tarde");
       } finally {
         setLoading(false);
       }
@@ -160,7 +213,7 @@ export function Home() {
         </>
       ) : (
         <WrapperCategories>
-          {test_movies.map((movie) => (
+          {movies.map((movie) => (
             <WrapperCards key={movie.id}>
               <CategoryTitle>{movie.nameCategory}</CategoryTitle>
 
@@ -174,9 +227,6 @@ export function Home() {
                       onPress={() => handleMovieInfo(item)}
                     />
                   </MovieWrapper>
-                )}
-                ListFooterComponent={() => (
-                  <Button title="Ver mais" onPress={() => {}} />
                 )}
               />
             </WrapperCards>
@@ -196,6 +246,7 @@ export function Home() {
           ]}
         >
           <ButtonAnimated
+            testID="searchMovieButton"
             onPress={handleSearchMovies}
             style={[
               styles.button,
