@@ -30,7 +30,7 @@ O projeto foi feito com as seguintes tecnologias:
 git clone https://github.com/clertonf/listmymovies
 ```
 
-2. Entre na raiz do projeto e dê o comando `build.sh`, defina as credencias do banco de dados substituindo os valores `uol`. Por exemplo:
+2. Entre na raiz do projeto e dê um dos seguintes comandos para a instalação das dependências:
 
 ```bash
 yarn install 
