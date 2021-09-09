@@ -11,7 +11,7 @@
 Aplicativo que lista/busca filmes por categoria e nome, utilizando a API do [The Movie DB](https://www.themoviedb.org/?language=pt-BR), onde o usuário visualiza a sinopse do filme, sua nota no IMDb e a data de lançamento. 
  
 <p align="center" style="margin-top: 20px; border-top: 1px solid #eee; padding-top: 30px;">
-  Desafio elaborado pela <strong> Lead Dell.</strong>
+  Desafio elaborado pela equipe da <strong> Lead Dell.</strong>
 </p>
 
 
@@ -25,6 +25,7 @@ O projeto foi feito com as seguintes tecnologias:
 - [Styled-Components](https://styled-components.com/)
 - [Jest](https://jestjs.io/pt-BR/)
 - [Redux](https://redux.js.org/)
+- [React-Navigation](https://reactnavigation.org/)
 
 ### Demonstração do app - Link do Youtube abaixo:
 [List My Movies](https://www.youtube.com/watch?v=UxuTmnzvzd0)
@@ -57,7 +58,7 @@ expo start
 ```
 
 4. Depois que ele iniciar, automaticamente irá abrir uma aba localhost contendo um QRCode para scanear.
-5. Execute pelo emulador de sua máquina ou baixe o app Expo Go, disponível na Playstore ou Applestore.
+5. Execute pelo emulador de sua máquina ou baixe o app Expo Go, disponível na Google store ou Apple store.
 
 
 
