@@ -20,7 +20,9 @@ export const ImageMovie = styled.Image`
   border-radius: 30px;
 `;
 
-export const Title = styled.Text`
+export const Title = styled.Text.attrs({
+  numberOfLines: 3,
+})`
   font-family: ${({ theme }) => theme.fonts.primary_600};
   font-size: ${RFValue(24)}px;
   color: ${({ theme }) => theme.colors.main_light};
