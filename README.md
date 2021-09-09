@@ -26,6 +26,9 @@ O projeto foi feito com as seguintes tecnologias:
 - [Jest](https://jestjs.io/pt-BR/)
 - [Redux](https://redux.js.org/)
 
+### Demonstração do app - Link do Youtube abaixo:
+[List My Movies](https://www.youtube.com/watch?v=UxuTmnzvzd0)
+
 
 ## :zap: Executando o Projeto
 
