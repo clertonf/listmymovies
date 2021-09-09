@@ -32,3 +32,5 @@ describe("Profile Screen:", () => {
     expect(textTitle.props.children).toContain("Perfil"); //Filho do elemento
   });
 });
+
+//Primeiro teste
