@@ -51,9 +51,7 @@ export const CategoryTitle = styled.Text`
 `;
 
 export const ContainerSearch = styled.View`
-  flex-direction: row-reverse;
-
-  padding: 10px 30px;
+  align-items: center;
 `;
 
 export const ContainerAnimation = styled.View`

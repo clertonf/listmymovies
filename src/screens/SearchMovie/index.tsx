@@ -32,27 +32,19 @@ export function SearchMovie() {
   const apiKey = "api_key=d1500cc9c6f961ce14985838ee30eee4";
   const language = "language=pt-BR";
 
-  const { navigate } = useNavigation();
+  const { goBack, navigate } = useNavigation();
 
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [moviesReleases, setMoviesReleases] = useState<MovieDTO[]>([]);
-
-  const movies = [
-    {
-      id: 1,
-      category: moviesReleases,
-      nameCategory: "Lançamentos 🔥",
-    },
-  ];
+  const [searchMovie, setSearchMovie] = useState<MovieDTO[]>([]);
 
   function handleMovieInfo(movie: MovieDTO) {
     dispatch(movieInfo(movie));
     navigate("MovieDetails");
   }
 
-  function handleToBackHome() {
-    navigate("Home");
+  function handleGoBack() {
+    goBack();
   }
 
   async function getMovie() {
@@ -67,17 +59,17 @@ export function SearchMovie() {
     if (response.data.total_results === 0) {
       Alert.alert("Ops!", "Nenhum filme encontrado :(");
     }
-    console.log(response.data.results);
-    setMoviesReleases(response.data.results);
+
+    setSearchMovie(response.data.results);
   }
 
   useEffect(() => {
     async function listMovies() {
       try {
         const response = await api.get(`/discover/movie?${apiKey}&${language}`);
-        setMoviesReleases(response.data.results);
+        setSearchMovie(response.data.results);
       } catch (error) {
-        console.log(error);
+        Alert.alert("Ops!", "Erro interno, tente novamente mais tarde");
       } finally {
         setLoading(false);
       }
@@ -98,7 +90,7 @@ export function SearchMovie() {
         </WrapperTitle>
 
         <WrapperBackButton>
-          <BackButton onPress={handleToBackHome} />
+          <BackButton onPress={handleGoBack} testID="searchMovieButton" />
         </WrapperBackButton>
 
         <ContainerSearch>
@@ -113,30 +105,28 @@ export function SearchMovie() {
         </ContainerSearch>
 
         <WrapperCategories>
-          {movies.map((movie) => (
-            <WrapperCards key={movie.id}>
-              {loading ? (
-                <ContainerAnimation>
-                  <LoadAnimation />
-                </ContainerAnimation>
-              ) : (
-                <MovieList
-                  data={movie.category}
-                  keyExtractor={(item) => String(item.id)}
-                  showsVerticalScrollIndicator={false}
-                  numColumns={1}
-                  renderItem={({ item }) => (
-                    <MovieWrapper>
-                      <CardMovieHorizontal
-                        data={item}
-                        onPress={() => handleMovieInfo(item)}
-                      />
-                    </MovieWrapper>
-                  )}
-                />
-              )}
-            </WrapperCards>
-          ))}
+          <WrapperCards>
+            {loading ? (
+              <ContainerAnimation>
+                <LoadAnimation />
+              </ContainerAnimation>
+            ) : (
+              <MovieList
+                data={searchMovie}
+                keyExtractor={(item) => String(item.id)}
+                showsVerticalScrollIndicator={false}
+                numColumns={1}
+                renderItem={({ item }) => (
+                  <MovieWrapper>
+                    <CardMovieHorizontal
+                      data={item}
+                      onPress={() => handleMovieInfo(item)}
+                    />
+                  </MovieWrapper>
+                )}
+              />
+            )}
+          </WrapperCards>
         </WrapperCategories>
       </TouchableWithoutFeedback>
     </Container>
