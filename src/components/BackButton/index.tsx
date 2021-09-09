@@ -13,11 +13,7 @@ export function BackButton({ color, ...rest }: ButtonProps) {
   const theme = useTheme();
   return (
     <Container {...rest}>
-      <MaterialIcons
-        name="chevron-left"
-        size={28}
-        color={color ? color : theme.colors.text}
-      />
+      <MaterialIcons name="chevron-left" size={28} color="#FFF" />
     </Container>
   );
 }
